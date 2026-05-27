@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Книжный магазин</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <!-- Заголовок -->
+    <div class="header">
+        <h1>Книжный магазин</h1>
+        <input type="text" id="search" placeholder="Поиск книги...">
+        <button onclick="openCart()">Корзина (<span id="cartCount">0</span>)</button>
+    </div>
+
+    <!-- Кнопки категорий -->
+    <div class="categories">
+        <button onclick="filterBooks('all')">Все</button>
+        <button onclick="filterBooks('fiction')">Художка</button>
+        <button onclick="filterBooks('study')">Учеба</button>
+        <button onclick="filterBooks('kids')">Детские</button>
+    </div>
+
+    <!-- Список книг -->
+    <div class="books" id="booksList"></div>
+
+    <!-- Окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <h2>Корзина</h2>
+            <div id="cartItems"></div>
+            <div id="cartTotal"></div>
+            <button onclick="closeCart()" style="background: #999;">Закрыть</button>
+            <button onclick="openCheckout()" style="background: #4CAF50;">Оформить заказ</button>
+        </div>
+    </div>
+
+    <!-- Окно оформления заказа -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h2>Оформление заказа</h2>
+            <div class="form-group">
+                <label>Ваше имя:</label>
+                <input type="text" id="customerName" placeholder="Иван Иванов">
+            </div>
+            <div class="form-group">
+                <label>Телефон:</label>
+                <input type="tel" id="customerPhone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-group">
+                <label>Адрес доставки:</label>
+                <input type="text" id="customerAddress" placeholder="ул. Пушкина, д. 10, кв. 5">
+            </div>
+            <div class="form-group">
+                <label>Способ оплаты:</label>
+                <select id="paymentMethod">
+                    <option value="card">Банковская карта</option>
+                    <option value="cash">Наличные при получении</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Комментарий к заказу:</label>
+                <textarea id="comment" placeholder="Домофон не работает, позвоните..."></textarea>
+            </div>
+            <h3 id="checkoutTotal"></h3>
+            <button onclick="submitOrder()">Подтвердить заказ</button>
+            <button onclick="closeCheckout()" style="background: #999;">Назад</button>
+        </div>
+    </div>
+
+    <!-- Окно "Заказ принят" -->
+    <div class="modal" id="successModal">
+        <div class="modal-content" style="text-align: center;">
+            <h2>Заказ принят!</h2>
+            <p>Спасибо за покупку!</p>
+            <p>Наш менеджер свяжется с вами в ближайшее время.</p>
+            <button onclick="closeSuccess()">Хорошо</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
