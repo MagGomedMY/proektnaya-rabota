@@ -1,8 +1,4 @@
-// ============================================
-// 1. СПИСОК КНИГ (наша база данных)
-// ============================================
 const books = [
-    // ========== ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА (fiction) ==========
     { id: 1, title: "Мастер и Маргарита", author: "Михаил Булгаков", price: 550, category: "fiction" },
     { id: 2, title: "Война и мир", author: "Лев Толстой", price: 750, category: "fiction" },
     { id: 3, title: "Преступление и наказание", author: "Фёдор Достоевский", price: 480, category: "fiction" },
@@ -19,7 +15,6 @@ const books = [
     { id: 14, title: "Три товарища", author: "Эрих Мария Ремарк", price: 450, category: "fiction" },
     { id: 15, title: "Великий Гэтсби", author: "Фрэнсис Фицджеральд", price: 380, category: "fiction" },
 
-    // ========== УЧЕБНАЯ ЛИТЕРАТУРА (study) ==========
     { id: 16, title: "Математика 5 класс", author: "Виленкин Н.Я.", price: 400, category: "study" },
     { id: 17, title: "Физика 9 класс", author: "Перышкин А.В.", price: 450, category: "study" },
     { id: 18, title: "Химия 8 класс", author: "Габриелян О.С.", price: 420, category: "study" },
@@ -36,7 +31,6 @@ const books = [
     { id: 29, title: "Окружающий мир 3 класс", author: "Плешаков А.А.", price: 350, category: "study" },
     { id: 30, title: "Экономика для студентов", author: "Булатов А.С.", price: 600, category: "study" },
 
-    // ========== ДЕТСКАЯ ЛИТЕРАТУРА (kids) ==========
     { id: 31, title: "Колобок", author: "Народная сказка", price: 100, category: "kids" },
     { id: 32, title: "Сказки Пушкина", author: "Александр Пушкин", price: 250, category: "kids" },
     { id: 33, title: "Винни-Пух", author: "Алан Милн", price: 350, category: "kids" },
@@ -64,15 +58,9 @@ const books = [
     { id: 55, title: "Русалочка", author: "Ганс Христиан Андерсен", price: 270, category: "kids" }
 ];
 
-// ============================================
-// 2. КОРЗИНА
-// ============================================
-// Корзина - это массив объектов. Каждый объект - книга + количество
 let cart = [];
 
-// ============================================
-// 3. ПОКАЗАТЬ КНИГИ НА ЭКРАНЕ
-// ============================================
+
 function showBooks(booksToShow) {
     const booksList = document.getElementById('booksList');
     booksList.innerHTML = '';
@@ -92,9 +80,6 @@ function showBooks(booksToShow) {
     });
 }
 
-// ============================================
-// 4. ДОБАВИТЬ В КОРЗИНУ
-// ============================================
 function addToCart(bookId) {
     // Ищем книгу
     const book = books.find(b => b.id === bookId);
@@ -103,10 +88,8 @@ function addToCart(bookId) {
     const existingItem = cart.find(item => item.id === bookId);
     
     if (existingItem) {
-        // Если есть - увеличиваем количество
         existingItem.quantity += 1;
     } else {
-        // Если нет - добавляем новую с количеством 1
         cart.push({
             id: book.id,
             title: book.title,
@@ -116,40 +99,28 @@ function addToCart(bookId) {
         });
     }
     
-    // Обновляем счетчик в шапке
     updateCartCount();
     
-    // Показываем уведомление
     alert(book.title + ' добавлена в корзину!');
 }
 
-// ============================================
-// 5. ОБНОВИТЬ СЧЕТЧИК КОРЗИНЫ
-// ============================================
 function updateCartCount() {
-    // Считаем общее количество товаров
     let totalItems = 0;
     cart.forEach(item => {
         totalItems += item.quantity;
     });
     
-    // Обновляем цифру в шапке
     document.getElementById('cartCount').textContent = totalItems;
 }
 
-// ============================================
-// 6. ОТКРЫТЬ ОКНО КОРЗИНЫ
-// ============================================
 function openCart() {
     const cartItems = document.getElementById('cartItems');
     const cartTotal = document.getElementById('cartTotal');
     
-    // Если корзина пустая
     if (cart.length === 0) {
         cartItems.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
         cartTotal.innerHTML = '';
     } else {
-        // Показываем все товары
         cartItems.innerHTML = '';
         
         cart.forEach((item, index) => {
@@ -169,7 +140,6 @@ function openCart() {
             `;
         });
         
-        // Считаем и показываем общую сумму
         let total = 0;
         cart.forEach(item => {
             total += item.price * item.quantity;
@@ -178,56 +148,38 @@ function openCart() {
         cartTotal.innerHTML = `<h3>Итого: ${total} ₽</h3>`;
     }
     
-    // Показываем модальное окно
     document.getElementById('cartModal').style.display = 'block';
 }
 
-// ============================================
-// 7. ИЗМЕНИТЬ КОЛИЧЕСТВО ТОВАРА
-// ============================================
 function changeQuantity(index, change) {
     cart[index].quantity += change;
     
-    // Если количество стало 0 или меньше - удаляем товар
     if (cart[index].quantity <= 0) {
         cart.splice(index, 1);
     }
     
-    // Обновляем счетчик и перерисовываем корзину
     updateCartCount();
     openCart();
 }
 
-// ============================================
-// 8. УДАЛИТЬ ТОВАР ИЗ КОРЗИНЫ
-// ============================================
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCartCount();
     openCart();
 }
 
-// ============================================
-// 9. ЗАКРЫТЬ КОРЗИНУ
-// ============================================
 function closeCart() {
     document.getElementById('cartModal').style.display = 'none';
 }
 
-// ============================================
-// 10. ОТКРЫТЬ ОФОРМЛЕНИЕ ЗАКАЗА
-// ============================================
 function openCheckout() {
-    // Закрываем корзину
     closeCart();
     
-    // Если корзина пустая - не открываем оформление
     if (cart.length === 0) {
         alert('Корзина пуста! Добавьте книги.');
         return;
     }
     
-    // Считаем и показываем сумму заказа
     let total = 0;
     cart.forEach(item => {
         total += item.price * item.quantity;
@@ -235,43 +187,31 @@ function openCheckout() {
     
     document.getElementById('checkoutTotal').textContent = 'Сумма заказа: ' + total + ' ₽';
     
-    // Открываем окно оформления
     document.getElementById('checkoutModal').style.display = 'block';
 }
 
-// ============================================
-// 11. ЗАКРЫТЬ ОФОРМЛЕНИЕ
-// ============================================
 function closeCheckout() {
     document.getElementById('checkoutModal').style.display = 'none';
-    // Возвращаемся в корзину
     openCart();
 }
 
-// ============================================
-// 12. ОТПРАВИТЬ ЗАКАЗ
-// ============================================
 function submitOrder() {
-    // Получаем данные из формы
     const name = document.getElementById('customerName').value;
     const phone = document.getElementById('customerPhone').value;
     const address = document.getElementById('customerAddress').value;
     const payment = document.getElementById('paymentMethod').value;
     const comment = document.getElementById('comment').value;
     
-    // Проверяем, что обязательные поля заполнены
     if (name === '' || phone === '' || address === '') {
         alert('Заполните все обязательные поля: имя, телефон и адрес!');
         return;
     }
     
-    // Считаем сумму
     let total = 0;
     cart.forEach(item => {
         total += item.price * item.quantity;
     });
     
-    // Формируем заказ (в реальном проекте отправили бы на сервер)
     const order = {
         customer: {
             name: name,
@@ -285,36 +225,25 @@ function submitOrder() {
         date: new Date().toLocaleString()
     };
     
-    // Выводим заказ в консоль (для проверки)
     console.log('Новый заказ:', order);
     
-    // Очищаем корзину
     cart = [];
     updateCartCount();
     
-    // Закрываем окно оформления
     document.getElementById('checkoutModal').style.display = 'none';
     
-    // Очищаем форму
     document.getElementById('customerName').value = '';
     document.getElementById('customerPhone').value = '';
     document.getElementById('customerAddress').value = '';
     document.getElementById('comment').value = '';
     
-    // Показываем окно успеха
     document.getElementById('successModal').style.display = 'block';
 }
 
-// ============================================
-// 13. ЗАКРЫТЬ ОКНО УСПЕХА
-// ============================================
 function closeSuccess() {
     document.getElementById('successModal').style.display = 'none';
 }
 
-// ============================================
-// 14. ФИЛЬТРАЦИЯ ПО КАТЕГОРИЯМ
-// ============================================
 function filterBooks(category) {
     if (category === 'all') {
         showBooks(books);
@@ -324,9 +253,6 @@ function filterBooks(category) {
     }
 }
 
-// ============================================
-// 15. ПОИСК КНИГ
-// ============================================
 document.getElementById('search').addEventListener('input', function() {
     const searchText = this.value.toLowerCase();
     
@@ -341,7 +267,4 @@ document.getElementById('search').addEventListener('input', function() {
     }
 });
 
-// ============================================
-// 16. ЗАПУСК ПРИЛОЖЕНИЯ
-// ============================================
 showBooks(books);
