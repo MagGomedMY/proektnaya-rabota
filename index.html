@@ -7,25 +7,21 @@
 </head>
 <body>
     
-    <!-- Заголовок -->
     <div class="header">
         <h1>Книжный магазин</h1>
         <input type="text" id="search" placeholder="Поиск книги...">
         <button onclick="openCart()">Корзина (<span id="cartCount">0</span>)</button>
     </div>
 
-    <!-- Кнопки категорий -->
     <div class="categories">
         <button onclick="filterBooks('all')">Все</button>
-        <button onclick="filterBooks('fiction')">Художка</button>
-        <button onclick="filterBooks('study')">Учеба</button>
-        <button onclick="filterBooks('kids')">Детские</button>
+        <button onclick="filterBooks('fiction')">Художественная литература</button>
+        <button onclick="filterBooks('study')">Учебные книги</button>
+        <button onclick="filterBooks('kids')">Детские книги</button>
     </div>
 
-    <!-- Список книг -->
     <div class="books" id="booksList"></div>
 
-    <!-- Окно корзины -->
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <h2>Корзина</h2>
@@ -36,7 +32,6 @@
         </div>
     </div>
 
-    <!-- Окно оформления заказа -->
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
             <h2>Оформление заказа</h2>
@@ -69,7 +64,6 @@
         </div>
     </div>
 
-    <!-- Окно "Заказ принят" -->
     <div class="modal" id="successModal">
         <div class="modal-content" style="text-align: center;">
             <h2>Заказ принят!</h2>
